@@ -16,7 +16,7 @@ runcode() {
               DIRECTORY=${ARGS[i+1]};
               VOLUME="-v $DIRECTORY:/app";;
           --command)
-            COMMAND=${ARGS[i+1]};;
+              COMMAND=${ARGS[i+1]};;
           *)
               break;;
       esac
