@@ -1,24 +1,26 @@
 #!/bin/bash
 runcode() {
-  CONTAINER='';
-  VOLUME='';
-  COMMAND='bash';
+  CONTAINER="";
+  VOLUME="";
+  HOST_DIR="";
+  CONTAINER_DIR="";
+  COMMAND="bash";
   ARGS=();
 
   for i in $@; do ARGS+=($i); done;
   for (( i=0;i<${#ARGS[@]};i++ )) do
       case "${ARGS[i]}" in
           node)
-              CONTAINER="node";;
+              CONTAINER="node";
+              CONTAINER_DIR="/app";;
           go)
-              CONTAINER="golang";;
+              CONTAINER="golang";
+              CONTAINER_DIR="/go/src";; # to comply with $GOPATH
           --volume)
-              DIRECTORY=${ARGS[i+1]};
-              VOLUME="-v $DIRECTORY:/app";;
+              HOST_DIR=${ARGS[i+1]};
+              VOLUME="-v $HOST_DIR:/$CONTAINER_DIR";;
           --command)
               COMMAND=${ARGS[i+1]};;
-          *)
-              break;;
       esac
   done;
 
